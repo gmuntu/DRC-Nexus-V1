@@ -1,0 +1,6 @@
+{
+  "name": "DRC Nexus",
+  "description": "Interconnected Infrastructure and Regional Coordination Platform featuring Sophisticated Dark aesthetics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
