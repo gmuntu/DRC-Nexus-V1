@@ -33,8 +33,17 @@ interface Particle {
   size: number;
 }
 
-export default function MineralBackground() {
+interface MineralBackgroundProps {
+  isLight?: boolean;
+}
+
+export default function MineralBackground({ isLight = false }: MineralBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const isLightRef = useRef(isLight);
+
+  useEffect(() => {
+    isLightRef.current = isLight;
+  }, [isLight]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -117,16 +126,23 @@ export default function MineralBackground() {
     // Render loop
     const render = () => {
       ctx.clearRect(0, 0, width, height);
+      const light = isLightRef.current;
 
-      // Deep executive midnight navy canvas background
+      // Executive canvas background
       const bgGrad = ctx.createLinearGradient(0, 0, width, height);
-      bgGrad.addColorStop(0, '#090D16');
-      bgGrad.addColorStop(0.5, '#0E1422');
-      bgGrad.addColorStop(1, '#121A2B');
+      if (light) {
+        bgGrad.addColorStop(0, '#F8FAFC');
+        bgGrad.addColorStop(0.5, '#F1F5F9');
+        bgGrad.addColorStop(1, '#E2E8F0');
+      } else {
+        bgGrad.addColorStop(0, '#090D16');
+        bgGrad.addColorStop(0.5, '#0E1422');
+        bgGrad.addColorStop(1, '#121A2B');
+      }
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 
-      // Draw horizontal wavy sine curves with subtle sapphire-slate glow
+      // Draw horizontal wavy sine curves with subtle glow
       wavePhase += 0.003;
       const waveCount = 24;
       const waveSpacing = height / (waveCount - 2);
@@ -135,7 +151,11 @@ export default function MineralBackground() {
       for (let i = 0; i < waveCount; i++) {
         const yOffset = i * waveSpacing - 20;
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(45, 68, 115, ${0.25 + (i % 2) * 0.18})`;
+        if (light) {
+          ctx.strokeStyle = `rgba(148, 163, 184, ${0.2 + (i % 2) * 0.15})`;
+        } else {
+          ctx.strokeStyle = `rgba(45, 68, 115, ${0.25 + (i % 2) * 0.18})`;
+        }
 
         for (let x = 0; x <= width + 20; x += 15) {
           const y = yOffset + Math.sin(x * 0.006 + i * 0.45 + wavePhase) * 22;
@@ -164,7 +184,11 @@ export default function MineralBackground() {
               ctx.beginPath();
               ctx.moveTo(p1.x, p1.y);
               ctx.lineTo(p2.x, p2.y);
-              ctx.strokeStyle = `rgba(200, 169, 126, ${lineAlpha})`;
+              if (light) {
+                ctx.strokeStyle = `rgba(180, 83, 9, ${lineAlpha})`;
+              } else {
+                ctx.strokeStyle = `rgba(200, 169, 126, ${lineAlpha})`;
+              }
               ctx.lineWidth = 1;
               ctx.stroke();
             }
@@ -211,17 +235,26 @@ export default function MineralBackground() {
         const cardHeight = 36 * p.scale;
 
         if (isHovered) {
-          ctx.shadowColor = 'rgba(200, 169, 126, 0.4)';
+          ctx.shadowColor = light ? 'rgba(180, 83, 9, 0.3)' : 'rgba(200, 169, 126, 0.4)';
           ctx.shadowBlur = 14;
         }
 
         // Card background
-        ctx.fillStyle = isHovered
-          ? 'rgba(24, 34, 56, 0.95)'
-          : `rgba(16, 23, 38, ${Math.max(0.7, p.alpha * 1.1)})`;
-        ctx.strokeStyle = isHovered
-          ? '#C8A97E'
-          : `rgba(60, 85, 130, ${Math.max(0.4, p.alpha * 1.1)})`;
+        if (light) {
+          ctx.fillStyle = isHovered
+            ? 'rgba(255, 255, 255, 0.98)'
+            : `rgba(255, 255, 255, ${Math.max(0.85, p.alpha * 1.2)})`;
+          ctx.strokeStyle = isHovered
+            ? '#B45309'
+            : `rgba(203, 213, 225, ${Math.max(0.6, p.alpha * 1.2)})`;
+        } else {
+          ctx.fillStyle = isHovered
+            ? 'rgba(24, 34, 56, 0.95)'
+            : `rgba(16, 23, 38, ${Math.max(0.7, p.alpha * 1.1)})`;
+          ctx.strokeStyle = isHovered
+            ? '#C8A97E'
+            : `rgba(60, 85, 130, ${Math.max(0.4, p.alpha * 1.1)})`;
+        }
         ctx.lineWidth = isHovered ? 1.5 : 1;
 
         ctx.beginPath();
@@ -232,7 +265,11 @@ export default function MineralBackground() {
         ctx.shadowBlur = 0;
 
         // Atomic number
-        ctx.fillStyle = isHovered ? '#C8A97E' : `rgba(148, 163, 184, ${p.alpha * 1.2})`;
+        if (light) {
+          ctx.fillStyle = isHovered ? '#B45309' : `rgba(100, 116, 139, ${p.alpha * 1.2})`;
+        } else {
+          ctx.fillStyle = isHovered ? '#C8A97E' : `rgba(148, 163, 184, ${p.alpha * 1.2})`;
+        }
         ctx.font = `${Math.max(7, Math.floor(8 * p.scale))}px monospace`;
         ctx.textAlign = 'right';
         ctx.fillText(
@@ -242,13 +279,21 @@ export default function MineralBackground() {
         );
 
         // Chemical Symbol
-        ctx.fillStyle = isHovered ? '#FFFFFF' : `rgba(241, 245, 249, ${p.alpha * 1.3})`;
+        if (light) {
+          ctx.fillStyle = isHovered ? '#1E293B' : `rgba(15, 23, 42, ${p.alpha * 1.3})`;
+        } else {
+          ctx.fillStyle = isHovered ? '#FFFFFF' : `rgba(241, 245, 249, ${p.alpha * 1.3})`;
+        }
         ctx.font = `bold ${Math.max(10, Math.floor(13 * p.scale))}px 'Plus Jakarta Sans', sans-serif`;
         ctx.textAlign = 'center';
         ctx.fillText(p.mineral.symbol, 0, -1 * p.scale);
 
         // Mineral Full Name
-        ctx.fillStyle = isHovered ? '#C8A97E' : `rgba(148, 163, 184, ${p.alpha * 1.2})`;
+        if (light) {
+          ctx.fillStyle = isHovered ? '#B45309' : `rgba(100, 116, 139, ${p.alpha * 1.2})`;
+        } else {
+          ctx.fillStyle = isHovered ? '#C8A97E' : `rgba(148, 163, 184, ${p.alpha * 1.2})`;
+        }
         ctx.font = `${Math.max(6, Math.floor(7.5 * p.scale))}px sans-serif`;
         ctx.fillText(p.mineral.name, 0, cardHeight / 2 - 4 * p.scale);
 

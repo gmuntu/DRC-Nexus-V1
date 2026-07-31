@@ -4,6 +4,7 @@ interface DNLogoProps {
   className?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   isFr?: boolean;
+  isLight?: boolean;
   showText?: boolean;
   textClassName?: string;
   layout?: 'horizontal' | 'vertical';
@@ -128,6 +129,7 @@ export const DNLogo: React.FC<DNLogoProps> = ({
   className = '', 
   size = 'md', 
   isFr = false,
+  isLight = false,
   showText = true,
   layout = 'horizontal',
   textClassName = '' 
@@ -155,14 +157,14 @@ export const DNLogo: React.FC<DNLogoProps> = ({
       {showText && (
         <div className={`flex flex-col ${layout === 'vertical' ? 'items-center text-center' : 'items-start text-left'}`}>
           <div className={`flex items-center gap-1.5 ${layout === 'vertical' ? 'justify-center' : 'justify-start'}`}>
-            <span className={`font-black tracking-wider uppercase text-white leading-none ${titleSizeMap[size]} ${textClassName}`}>
-              DRC <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFF2D6] via-[#FBBF24] to-[#F59E0B] font-black drop-shadow-sm">NEXUS</span>
+            <span className={`font-black tracking-wider uppercase leading-none ${isLight ? 'text-slate-900' : 'text-white'} ${titleSizeMap[size]} ${textClassName}`}>
+              DRC <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D97706] via-[#B45309] to-[#D97706] dark:from-[#FFF2D6] dark:via-[#FBBF24] dark:to-[#F59E0B] font-black drop-shadow-sm">NEXUS</span>
             </span>
           </div>
           
           <div className={`flex items-center gap-1.5 mt-1.5 ${layout === 'vertical' ? 'justify-center' : 'justify-start'}`}>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] inline-block animate-pulse shrink-0" />
-            <span className={`${subtitleSizeMap[size]} font-bold tracking-[0.2em] text-slate-300 uppercase leading-none`}>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7] dark:bg-[#38BDF8] inline-block animate-pulse shrink-0" />
+            <span className={`${subtitleSizeMap[size]} font-bold tracking-[0.2em] ${isLight ? 'text-slate-600' : 'text-slate-300'} uppercase leading-none`}>
               {subtitleText}
             </span>
           </div>
