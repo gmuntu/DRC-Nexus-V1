@@ -131,9 +131,9 @@ export default function MineralBackground({ isLight = false }: MineralBackground
       // Executive canvas background
       const bgGrad = ctx.createLinearGradient(0, 0, width, height);
       if (light) {
-        bgGrad.addColorStop(0, '#F8FAFC');
-        bgGrad.addColorStop(0.5, '#F1F5F9');
-        bgGrad.addColorStop(1, '#E2E8F0');
+        bgGrad.addColorStop(0, '#F6F2ED');
+        bgGrad.addColorStop(0.5, '#F2EEE9');
+        bgGrad.addColorStop(1, '#EBE5DE');
       } else {
         bgGrad.addColorStop(0, '#090D16');
         bgGrad.addColorStop(0.5, '#0E1422');

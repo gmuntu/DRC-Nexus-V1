@@ -9,7 +9,7 @@
   }
 
   body.light-theme {
-    background-color: #F1F5F9;
+    background-color: #F2EEE9;
     color: #0F172A;
   }
 }
@@ -39,7 +39,7 @@
 
 /* Light theme overrides for cards, borders, text, inputs, and modals */
 .light-theme ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #F2EEE9;
 }
 
 .light-theme ::-webkit-scrollbar-thumb {
@@ -63,15 +63,15 @@
 .light-theme .bg-slate-800\/80 {
   background-color: #FFFFFF !important;
   color: #0F172A !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+  border-color: #D3CBD1 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03) !important;
 }
 
 .light-theme .bg-\[\#0B0F17\],
 .light-theme .bg-\[\#0B0F17\]\/90 {
-  background-color: #F8FAFC !important;
+  background-color: #F2EEE9 !important;
   color: #0F172A !important;
-  border-color: #E2E8F0 !important;
+  border-color: #E2DDD5 !important;
 }
 
 /* Headings and Titles - Maximum Contrast Slate 900 */
@@ -215,8 +215,8 @@
 }
 
 .light-theme table thead tr {
-  background-color: #F1F5F9 !important;
-  border-bottom: 2px solid #E2E8F0 !important;
+  background-color: #E8E3DC !important;
+  border-bottom: 2px solid #DCD6CD !important;
 }
 
 .light-theme table thead th {
